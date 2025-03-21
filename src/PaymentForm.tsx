@@ -4,7 +4,7 @@ import axios from 'axios';
 import './App.css'; // Importar el archivo CSS
 
 const PaymentForm = () => {
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState(10);
   const [loading, setLoading] = useState(false);
   const stripe = useStripe();
   const elements = useElements();
