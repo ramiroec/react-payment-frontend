@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import axios from 'axios';
+import './App.css'; // Importar el archivo CSS
 
 const PaymentForm = () => {
   const [amount, setAmount] = useState(0);
@@ -46,82 +47,40 @@ const PaymentForm = () => {
   };
 
   return (
-    <div style={styles.container}>
-      <h1 style={styles.title}>Simulador de Pagos</h1>
-      <div style={styles.formGroup}>
-        <label style={styles.label}>Monto en USD:</label>
+    <div className="payment-container">
+      <h1 className="payment-title">Comprar Producto</h1>
+      <img
+        src="https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/c10cdd96-35fd-46da-9c08-7ef19a13a142/calzado-de-running-en-carretera-zoom-fly-5-FN45PX.png" // URL de la imagen del producto
+        alt="Producto"
+        className="product-image"
+      />
+      <div className="form-group">
+        <label className="form-label">Monto en USD:</label>
         <input
           type="number"
           value={amount}
           onChange={(e) => setAmount(Number(e.target.value))}
           placeholder="Ej: 50"
-          style={styles.input}
+          className="form-input"
           min="1"
         />
       </div>
-      <div style={styles.formGroup}>
-        <label style={styles.label}>Detalles de la tarjeta:</label>
-        <div style={styles.cardElement}>
+      <div className="form-group">
+        <label className="form-label">Detalles de la tarjeta:</label>
+        <div className="card-element">
           <CardElement options={{ style: { base: { fontSize: '16px' } } }} />
         </div>
       </div>
       <button
         onClick={handlePayment}
         disabled={!stripe || loading}
-        style={styles.button}
+        className="payment-button"
       >
         {loading ? 'Procesando...' : 'Pagar'}
       </button>
+      {loading && <p className="loading-message">Por favor, espera...</p>}
     </div>
   );
-};
-
-// Estilos para mejorar la apariencia
-const styles = {
-  container: {
-    maxWidth: '400px',
-    margin: '0 auto',
-    padding: '20px',
-    border: '1px solid #ccc',
-    borderRadius: '8px',
-    boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
-  },
-  title: {
-    textAlign: 'center',
-    color: '#333',
-  },
-  formGroup: {
-    marginBottom: '20px',
-  },
-  label: {
-    display: 'block',
-    marginBottom: '8px',
-    fontWeight: 'bold',
-    color: '#555',
-  },
-  input: {
-    width: '100%',
-    padding: '10px',
-    fontSize: '16px',
-    borderRadius: '4px',
-    border: '1px solid #ccc',
-  },
-  cardElement: {
-    padding: '10px',
-    border: '1px solid #ccc',
-    borderRadius: '4px',
-    backgroundColor: '#f9f9f9',
-  },
-  button: {
-    width: '100%',
-    padding: '12px',
-    fontSize: '16px',
-    backgroundColor: '#007bff',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-  },
 };
 
 export default PaymentForm;
